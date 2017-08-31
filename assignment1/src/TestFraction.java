@@ -20,7 +20,6 @@ public class TestFraction
     } catch (FileNotFoundException e) {
       System.out.println("File not found");
       in = new Scanner(System.in);
-      fromFile = false;
     }
 
     do {
@@ -29,10 +28,12 @@ public class TestFraction
 
       numerator = in.nextLong();
       denominator = in.nextLong();
+      System.out.println("First numerator & denominator entered: " + numerator + " / " + denominator);
       f1 = new Fraction(numerator, denominator);
 
       numerator = in.nextInt();
       denominator = in.nextInt();
+      System.out.println("Second numerator & denominator entered: " + numerator + " / " + denominator);
       f2 = new Fraction(numerator, denominator);
 
       if (!f1.equals(Fraction.ZERO) || !f2.equals(Fraction.ZERO)) {
