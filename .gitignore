@@ -1,4 +1,6 @@
 out/
+*.ps
+*.html
 *.iml
 .idea/
 *.odt

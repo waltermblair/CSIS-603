@@ -181,35 +181,28 @@ public class LinkedList<E> implements Iterable<E>
     public void add(int index, E element)
       {
         Node<E> curr = first;
-        Node<E> newNode = new Node(element);
+        Node<E> newNode = new Node<>(element);
 
-        // If list is empty
-        if(size == 0) {
+        // If inserting at index 0, empty or not
+        if(index == 0) {
+          newNode.next = first;
           first = newNode;
-          last = first;
+          if(size == 0)
+            last = newNode;
         }
 
-        // If list is not empty
+        // If not empty and inserting in last index
+        else if(index == this.size) {
+          last.next = newNode;
+          last = newNode;
+        }
+
+        // If inserting anywhere else
         else {
-          // If inserting at index 0
-          if(index == 0) {
-            newNode.next = first;
-            first = newNode;
-          }
-
-          // If inserting in last index
-          else if(index == this.size) {
-            last.next = newNode;
-            last = newNode;
-          }
-
-          // If inserting anywhere else
-          else {
-            checkIndex(index);
-            curr = getNode(index - 1);
-            newNode.next = curr.next;
-            curr.next = newNode;
-          }
+          checkIndex(index);
+          curr = getNode(index - 1);
+          newNode.next = curr.next;
+          curr.next = newNode;
         }
         ++size;
       }
@@ -258,7 +251,6 @@ public class LinkedList<E> implements Iterable<E>
      */
     public E set(int index, E newValue)
       {
-        checkIndex(index);
         Node<E> curr = getNode(index);
         E rtnval = curr.data;
         curr.data = newValue;
@@ -319,18 +311,26 @@ public class LinkedList<E> implements Iterable<E>
      */
     public E remove(int index)
       {
+        checkIndex(index);
         E rtnval;
+        // If removing first item, empty or not
         if(index == 0) {
           rtnval = first.data;
-          first = first.next;
+          if(size > 0)
+            first = first.next;
+          else {
+            first = null;
+            last = null;
+          }
         }
+        // If not empty and removing last item
         else if(index == this.size-1) {
           rtnval = last.data;
           last = this.getNode(index-1);
           last.next = null;
         }
+        // If removing any other item
         else {
-          checkIndex(index);
           Node<E> curr = getNode(index - 1);
           rtnval = curr.next.data;
           curr.next = curr.next.next;
