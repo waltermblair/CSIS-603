@@ -26,15 +26,25 @@ public class PrintDirectoryStructure {
     }
 
     public static void printTree(File file) {
-
+        System.out.println(file.getPath());
+        if(file.isFile())
+            printFile(file, -1);
+        else
+            printDirectory(file, -1);
     }
 
     private static void printDirectory(File dir, int nestingLevel) {
-
+        System.out.println(getIndentString(++nestingLevel) + "+ " + dir.getName());
+        for (File f : dir.listFiles()) {
+            if(f.isFile())
+                printFile(f, nestingLevel);
+            else
+                printDirectory(f, nestingLevel);
+        }
     }
 
     private static void printFile(File file, int nestingLevel) {
-
+        System.out.println(getIndentString(++nestingLevel) + "- " + file.getName());
     }
 
     private static String getIndentString(int nestingLevel) {
